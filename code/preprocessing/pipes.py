@@ -7,7 +7,7 @@ import spacy
 from numpy import mean
 from sumy.summarizers.text_rank import TextRankSummarizer
 
-from util import PATH_TO_MODEL
+from util import PATH_TO_MODEL, PATH_TO_ANNOTATIONS
 from util.summarization import summarize_batch
 
 
@@ -99,10 +99,10 @@ class ExtractInfo:
         docs = self.spacy_model.pipe(self.texts)
         self.annots = []
         try:
-            os.remove('Resources/annotations.jsonl')
+            os.remove(PATH_TO_ANNOTATIONS)
         except OSError:
             pass
-        annotation_file = open('Resources/annotations.jsonl', 'a', encoding='utf-8')
+        annotation_file = open(PATH_TO_ANNOTATIONS, 'a', encoding='utf-8')
         for doc in docs:
             annotation = {"text": doc.text, "labels": []}
             for ent in doc.ents:
